@@ -28,27 +28,30 @@
 
         <div class="dropdown container">
             <button class="btn btn-primary dropdown-toggle" type="button" id="selection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Freecodecamp
+                Select a website
             </button>
 
-            <div class="dropdown-menu" aria-labelledby="selection">
-                <a class="dropdown-item disabled" href="#">Select a website</a>
-                <a class="dropdown-item active" href="#">Freecodecamp</a>
-                <a class="dropdown-item" href="#">Dev.to</a>
-                <a class="dropdown-item" href="#">Hackernoon</a>
-                <a class="dropdown-item" href="#">Dzone</a>
+            <div class="dropdown-menu clickable" aria-labelledby="selection">
+                <a class="dropdown-item">FreeCodeCamp</a>
+                <a class="dropdown-item" >Dev.to</a>
+                <a class="dropdown-item">Hackernoon</a>
+                <a class="dropdown-item">Dzone</a>
             </div>
 
         </div>
 
-        <h2 class="container">Freecodecamp RSS</h2>
-        <div id="post-container" class="container">
-            <div class="card container">
-                <div class="card-header">
-                    <h3 id="post-title">test</h3>
-                </div>
+        <h2 id="current-website"class="container">Freecodecamp RSS</h2>
+        <div id="post-container" class="accordion container">
+            <div class="card">
                 <div class="card-body">
-                    <div id="post-description">test</div>
+                    <div class="card-header clickable" id="post_1_header" data-toggle="collapse" data-target="#post_1" aria-expanded="true" aria-controls="post_1">
+                        <h3 id="post-title" class="card-title"><a class="card-link" href="#">test</a></h3>
+                        <div class="card-text text-right">date</div>
+                    </div>
+                    <div id="post_1" class="collapse" aria-labelledby="post_1_header" data-parent="#post-container">
+                        
+                        <div class="card-text">test</div>
+                    </div>
                 </div>
             </div>
 
@@ -68,3 +71,4 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="./script/index.js"></script>
