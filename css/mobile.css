@@ -6,3 +6,8 @@
 .clickable {
     cursor: pointer;
 }
+
+.card {
+    max-width:500px;
+    min-width:300px;
+}
