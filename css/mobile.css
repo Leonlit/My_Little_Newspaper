@@ -3,11 +3,24 @@
     margin-bottom: 50px;
 }
 
+
 .clickable {
     cursor: pointer;
 }
 
 .card {
-    max-width:500px;
-    min-width:300px;
+    width:500px;
+    background-color: #1a2634;
+}
+
+body {
+    background-color: #0d1219;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(255, 255, 255, .125);
+}
+
+.dropdown-item:hover {
+    background-color: #4f5861;
 }
