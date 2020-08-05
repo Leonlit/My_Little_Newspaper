@@ -24,7 +24,7 @@ function showRSSFeed (website) {
             fetchData(constructDevToData, URLS[1]);
             break;
         case "Hackernoon":
-            fetchData(URLS[2]);
+            fetchData(constructHackernoonData, URLS[2]);
             break;
         case "Dzone":
             fetchData(URLS[3]);
@@ -38,7 +38,7 @@ function showRSSFeed (website) {
 
 async function fetchData (callback, url) {
     try {
-        await fetch(`${url}`)
+        await fetch(`https://cors-anywhere.herokuapp.com/${url}`)
         .then(response=>response.text())
         .then(data => {
             callback(parseXMLData(data));
@@ -78,12 +78,36 @@ function getImages (XML) {
     return XML.getElementsByTagName("media:content");
 }
 
+function getCreator (XML) {
+    return XML.getElementsByTagName("dc:creator");
+}
+
 function formatDates (date) {
     return date.slice(0, 17);
 }
 
 function formatDescriptionText (text) {
     return `${text.trim().slice(0,500)}...`;
+}
+
+function getCategories (XML) {
+    const ITEMS = ($(XML).find("item"));
+    const CATEGORIES = [];
+    for (let i = 0;i< ITEMS.length; i++) {
+        let cateArr = getTagData(ITEMS[i], "category", 0);
+        cateArr = cateArr.map(item=>`#${item}\t\t`);
+        CATEGORIES.push(cateArr);
+    }
+    return CATEGORIES;
+}
+
+function getAuthors (XML) {
+    const authors = getCreator(XML);
+    const AUTHORS = [];
+    for (let i = 0;i< authors.length; i++) {
+        AUTHORS.push(authors[i].textContent);
+        
+    }
 }
 
 function constructFCCData (xmlData) {
@@ -173,5 +197,50 @@ function constructDevToData (xmlData) {
         $(card).append(body);
         $("#post-container").append(card);
     }
+}
+
+function constructHackernoonData (xmlData) {
+
+    const CATEGORIES = getCategories(xmlData);
+    const AUTHORS = getAuthors(xmlData)
+
+    const TITLES = getTagData(xmlData, "title", 1)
+    const DATES = getTagData(xmlData, "pubDate", 1);
+    const LINKS = getTagData(xmlData, "link", 1);
+    
+    $("#post-container").html("");
+    
+    for (let i = 0; i < TITLES.length;i++) {
+        let card = document.createElement("div");
+        let header = document.createElement("div");
+        let title = document.createElement("h4");
+        let link = document.createElement("a");
+        let author = document.createElement("p");
+        let date = document.createElement("p");
+        let body = document.createElement("div");
+
+        $(card).addClass("card m-3");
+    
+        $(header).addClass("card-header");
+        $(link).text(TITLES[i]);
+        $(link).attr("href", (LINKS[i]));
+        $(link).attr("target","_blank");
+        $(title).append(link);
+        $(header).append(title);
+
+        $(author).addClass("card-text text-left inline mt-2");
+        $(author).text(AUTHORS[i]);
+        $(date).addClass("card-text text-right inline");
+        $(date).text(formatDates(DATES[i]));
+        $(header).append(author);
+        $(header).append(date);
+
+        $(body).addClass("card-body text-justify");
+        $(body).text(CATEGORIES[i]);
+
+        $(card).append(header);
+        $(card).append(body);
+        $("#post-container").append(card);
+    } 
 }
 
