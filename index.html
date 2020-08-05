@@ -13,14 +13,15 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a class="navbar-brand" href="#">My Little Newspaper</a>
+            <a class="navbar-brand mr-5 ml-1" href="#">My Little Newspaper</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
+                    <li class="nav-item btn btn-dark" onclick="lightDarkMode()">dark mode</li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Source Code</a>
+                        <a class="btn btn-dark" href="#">Source Code</a>
                     </li>
                 </ul>
             </div>
@@ -32,7 +33,7 @@
             </button>
 
             <div class="dropdown-menu clickable bg-dark text-white" aria-labelledby="selection">
-                <a class="dropdown-item">FreeCodeCamp</a>
+                <a class="dropdown-item active">FreeCodeCamp</a>
                 <a class="dropdown-item" >Dev.to</a>
                 <a class="dropdown-item">Hackernoon</a>
                 <a class="dropdown-item">Dzone</a>

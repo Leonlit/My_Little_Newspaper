@@ -1,7 +1,7 @@
 //handling option choosed
 $(".dropdown-menu a").click ((event) => {
     let text = $(event.target).text();
-    $(".dropdown .btn-primary").text(text);
+    $(".dropdown button").text(text);
     $(".dropdown-menu a").removeClass("active");
     $("#current-website").text(`${text} RSS Feed`);
     $(event.target).addClass("active");
@@ -64,5 +64,31 @@ function parseXMLData (xml) {
     }catch (err){
         console.log(err);
         return false;
+    }
+}
+
+let darkMode = true;
+function lightDarkMode () {
+    let navbar = $("nav").first();
+    let placeholder = $(".navbar-nav .nav-item").first();
+    let source = $(".navbar-nav .nav-item a");
+    let selectionBtn = $(".dropdown button").first();
+    let dropdownMenu = $(".dropdown div");
+    let dropDownMenuItems = $(".dropdown div a");
+    let currWebsite = $("#current-website");
+
+    if (darkMode) {
+        darkMode = false;
+        navbar.removeClass("bg-dark").addClass("bg-primary");
+        placeholder.removeClass("btn-dark").addClass("btn-primary");
+        source.removeClass("btn-dark").addClass("btn-primary");
+        selectionBtn.removeClass("bg-dark").addClass("bg-primary");
+        dropdownMenu.removeClass("bg-dark").addClass("bg-primary")
+        dropDownMenuItems.addClass("btn-primary")
+        currWebsite.removeClass("text-light").addClass("text-dark");
+        document.body.style.backgroundColor = "white";
+    }else {
+        darkMode = true;
+        document.body.style.backgroundColor = "#0d1219";
     }
 }
