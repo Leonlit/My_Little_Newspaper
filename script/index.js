@@ -11,7 +11,8 @@ $(".dropdown-menu a").click ((event) => {
 
 const URLS = [
                 "https://www.freecodecamp.org/news/rss/",
-                "https://dev.to/feed"
+                "https://dev.to/feed",
+                "https://hackernoon.com/feed",
             ]
 
 function showRSSFeed (website) {
@@ -62,18 +63,36 @@ function parseXMLData (xml) {
         console.log(err);
         return false;
     }
-} 
+}
+
+function getTagData (XML, tag, shift_position) {
+    const datas = ($(XML).find(tag));
+    const DATAS = [];
+    for (let x=0;x<datas.length;x++) {
+        DATAS.push((datas[x].childNodes[0].wholeText).trim());
+    }
+    return DATAS.slice(shift_position, DATAS.length);
+}
+
+function getImages (XML) {
+    return XML.getElementsByTagName("media:content");
+}
+
+function formatDates (date) {
+    return date.slice(0, 17);
+}
+
+function formatDescriptionText (text) {
+    return `${text.trim().slice(0,500)}...`;
+}
 
 function constructFCCData (xmlData) {
-    let titles = ($(xmlData).find("title"));
-    let description = $(xmlData).find("description");
-    let links = $(xmlData).find("link");
 
-    const TITLES = titles.slice(2, titles.length);
-    const DESCRIPTION = description.slice(1, description.length);
-    const IMAGES = xmlData.getElementsByTagName("media:content");
-    const DATES = $(xmlData).find("pubDate");
-    const LINKS = links.slice(2, links.length);
+    const TITLES = getTagData(xmlData, "title", 2)
+    const DESCRIPTIONS = getTagData(xmlData, "description", 1);
+    const DATES = getTagData(xmlData, "pubDate", 0);
+    const LINKS = getTagData(xmlData, "link", 2);
+    const IMAGES = getImages(xmlData);
     
     $("#post-container").html("");
 
@@ -89,18 +108,18 @@ function constructFCCData (xmlData) {
         $(card).addClass("card m-3");
     
         $(header).addClass("card-header");
-        $(link).text((TITLES[i].childNodes[0].wholeText).trim());
-        $(link).attr("href", (LINKS[i].childNodes[0].wholeText).trim());
+        $(link).text(TITLES[i]);
+        $(link).attr("href", (LINKS[i]));
         $(link).attr("target","_blank");
         $(title).append(link);
         $(header).append(title);
 
         $(date).addClass("card-text text-right");
-        $(date).text((DATES[i].childNodes[0].wholeText).trim().slice(0, 17));
+        $(date).text(formatDates(DATES[i]));
         $(header).append(date);
 
         $(body).addClass("card-body text-justify");
-        $(body).html((DESCRIPTION[i].childNodes[0].wholeText).trim());
+        $(body).html(DESCRIPTIONS[i]);
         
         $(image).addClass("card-img-top");
         $(image).attr("src", $(IMAGES[i]).attr("url"));
@@ -113,16 +132,12 @@ function constructFCCData (xmlData) {
 }
 
 function constructDevToData (xmlData) {
-    let titles = ($(xmlData).find("title"));
-    let description = $(xmlData).find("description");
-    let links = $(xmlData).find("link");
-    let authors = $(xmlData).find("author");
 
-    const TITLES = titles.slice(1, titles.length);
-    const DESCRIPTION = description.slice(1, description.length);
-    const AUTHORS = authors.slice(1, authors.length);
-    const DATES = $(xmlData).find("pubDate");
-    const LINKS = links.slice(1, links.length);
+    const TITLES = getTagData(xmlData, "title", 1)
+    const DESCRIPTIONS = getTagData(xmlData, "description", 1);
+    const DATES = getTagData(xmlData, "pubDate", 0);
+    const LINKS = getTagData(xmlData, "link", 1);
+    const AUTHORS = getTagData(xmlData, "author", 1);
     
     $("#post-container").html("");
 
@@ -138,21 +153,21 @@ function constructDevToData (xmlData) {
         $(card).addClass("card m-3");
     
         $(header).addClass("card-header");
-        $(link).text((TITLES[i].childNodes[0].wholeText).trim());
-        $(link).attr("href", (LINKS[i].childNodes[0].wholeText).trim());
+        $(link).text(TITLES[i]);
+        $(link).attr("href", (LINKS[i]));
         $(link).attr("target","_blank");
         $(title).append(link);
         $(header).append(title);
 
         $(author).addClass("card-text text-left inline mt-2");
-        $(author).text((AUTHORS[i].childNodes[0].wholeText).trim());
+        $(author).text(AUTHORS[i]);
         $(date).addClass("card-text text-right inline");
-        $(date).text((DATES[i].childNodes[0].wholeText).trim().slice(0, 17));
+        $(date).text(formatDates(DATES[i]));
         $(header).append(author);
         $(header).append(date);
 
         $(body).addClass("card-body text-justify");
-        $(body).html(((DESCRIPTION[i].childNodes[0].wholeText).trim()).slice(0,200).concat(`\.\.\.`));
+        $(body).html(formatDescriptionText(DESCRIPTIONS[i]));
 
         $(card).append(header);
         $(card).append(body);

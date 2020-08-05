@@ -24,3 +24,7 @@ body {
 .dropdown-item:hover {
     background-color: #4f5861;
 }
+
+img {
+    width:100%;
+}
