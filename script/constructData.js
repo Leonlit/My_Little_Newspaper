@@ -43,6 +43,18 @@ function getAuthors (XML) {
     return AUTHORS;
 }
 
+const card_dark = {
+    'width': '500px',
+    'background-color': '#1a2634'
+}
+
+const card_light = {
+    'width': '500px',
+    'background-color': 'white'
+}
+
+
+
 function constructFCCData (xmlData) {
     const TITLES = getTagData(xmlData, "title", 2)
     const DESCRIPTIONS = getTagData(xmlData, "description", 1);
@@ -60,6 +72,7 @@ function constructFCCData (xmlData) {
         let body = document.createElement("div");
 
         $(card).addClass("card m-3");
+        $(card).css(darkMode ? card_dark : card_light);
     
         $(header).addClass("card-header");
         $(link).text(TITLES[i]);
@@ -102,6 +115,7 @@ function constructDevToData (xmlData) {
         let body = document.createElement("div");
 
         $(card).addClass("card m-3");
+        $(card).css(darkMode ? card_dark : card_light);
     
         $(header).addClass("card-header");
         $(link).text(TITLES[i]);
@@ -143,6 +157,7 @@ function constructHackernoonData (xmlData) {
         let body = document.createElement("div");
 
         $(card).addClass("card m-3");
+        $(card).css(darkMode ? card_dark : card_light);
     
         $(header).addClass("card-header");
         $(link).text(TITLES[i]);
@@ -187,6 +202,7 @@ function constructDZoneData (xmlData) {
         let body = document.createElement("div");
 
         $(card).addClass("card m-3");
+        $(card).css(darkMode ? card_dark : card_light);
     
         $(header).addClass("card-header");
         $(link).text(TITLES[i]);

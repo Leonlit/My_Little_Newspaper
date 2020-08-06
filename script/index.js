@@ -12,7 +12,7 @@ $(".dropdown-menu a").click ((event) => {
 const URLS = [
                 "https://www.freecodecamp.org/news/rss/",
                 "https://dev.to/feed",
-                "https://cors-anywhere.herokuapp.com/https://hackernoon.com/feed",
+                "https://hackernoon.com/feed",
                 "http://feeds.dzone.com/home"
             ]
 
@@ -76,19 +76,53 @@ function lightDarkMode () {
     let dropdownMenu = $(".dropdown div");
     let dropDownMenuItems = $(".dropdown div a");
     let currWebsite = $("#current-website");
+    let postContainer = $("#post-container");
 
     if (darkMode) {
         darkMode = false;
-        navbar.removeClass("bg-dark").addClass("bg-primary");
-        placeholder.removeClass("btn-dark").addClass("btn-primary");
-        source.removeClass("btn-dark").addClass("btn-primary");
-        selectionBtn.removeClass("bg-dark").addClass("bg-primary");
-        dropdownMenu.removeClass("bg-dark").addClass("bg-primary")
+        $(placeholder).text("Dark Mode");
+        navbar.removeClass("bg-dark")
+                .addClass("bg-primary");
+        placeholder.removeClass("btn-dark")
+                    .addClass("btn-primary");
+        source.removeClass("btn-dark")
+                .addClass("btn-primary");
+        selectionBtn.removeClass("bg-dark")
+                    .addClass("bg-primary");
+        dropdownMenu.removeClass("bg-dark")
+                    .addClass("bg-primary")
         dropDownMenuItems.addClass("btn-primary")
-        currWebsite.removeClass("text-light").addClass("text-dark");
-        document.body.style.backgroundColor = "white";
+        currWebsite.removeClass("text-light")
+                    .addClass("text-dark");
+        postContainer.removeClass("text-light")
+                        .addClass("text-dark");
+        $(".card").css("background-color","white");
+        $(".card-header").css("border-bottom","1px solid rgba(0,0,0,.125)");
+        $("body").css("background-color", "#ffffff");
+        $("footer").removeClass("text-light")
+                    .addClass("text-dark");
     }else {
         darkMode = true;
-        document.body.style.backgroundColor = "#0d1219";
+        $(placeholder).text("Light Mode");
+        navbar.addClass("bg-dark")
+                .removeClass("bg-primary");
+        placeholder.addClass("btn-dark")
+                    .removeClass("btn-primary");
+        source.addClass("btn-dark")
+                .removeClass("btn-primary");
+        selectionBtn.addClass("bg-dark")
+                    .removeClass("bg-primary");
+        dropdownMenu.addClass("bg-dark")
+                    .removeClass("bg-primary")
+        dropDownMenuItems.removeClass("btn-primary")
+        currWebsite.addClass("text-light")
+                    .removeClass("text-dark");
+        postContainer.addClass("text-light")
+                        .removeClass("text-dark");
+        $(".card").css("background-color", "rgb(26, 38, 52)");
+        $(".card-header").css("border-bottom","1px solid rgba(255, 255, 255, .125)");
+        $("body").css("background-color", "#0d1219");
+        $("footer").removeClass("text-dark")
+                    .addClass("text-light");
     }
 }
