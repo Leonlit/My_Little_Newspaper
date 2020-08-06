@@ -5,7 +5,10 @@ $(".dropdown-menu a").click ((event) => {
     $(".dropdown-menu a").removeClass("active");
     $("#current-website").text(`${text} RSS Feed`);
     $(event.target).addClass("active");
-    showRSSFeed(text);
+    let state = showRSSFeed(text);
+    if (state == false) {
+        console.log("Something wrong while constructing request url");
+    }
 });
 
 
@@ -14,35 +17,52 @@ const URLS = [
                 "https://dev.to/feed",
                 "https://hackernoon.com/feed",
                 "http://feeds.dzone.com/home"
-            ]
+            ];
+
+const CALLBACKS = [constructFCCData, constructDevToData,
+                    constructHackernoonData, constructDZoneData
+                ];
 
 function showRSSFeed (website) {
+    let index;
     $("#post-container").html("");
+
     switch (website) {
         case "FreeCodeCamp":
-            fetchData(constructFCCData ,URLS[0]);
+            index = 0;
             break;
         case "Dev.to":
-            fetchData(constructDevToData, URLS[1]);
+            index = 1;
             break;
         case "Hackernoon":
-            fetchData(constructHackernoonData, URLS[2]);
+            index = 2;
             break;
         case "Dzone":
-            fetchData(constructDZoneData, URLS[3]);
+            index = 3;
             break;
         default:
             console.log("Error occured, unknown website provided");
             return false;
     }
+    let checkStorage = gotUsableData (website);
+    if (!checkStorage) {
+        fetchData(CALLBACKS[index], URLS[index], website);
+    }else {
+        reuseData(checkStorage, CALLBACKS[index]);
+    }
+}
+
+function reuseData (data, callback) {
+    callback(parseXMLData(data));
 }
 
 
-async function fetchData (callback, url) {
+async function fetchData (callback, url, website) {
     try {
-        await fetch(url)
+        await fetch(`https://cors-anywhere.herokuapp.com/${url}`)
         .then(response=>response.text())
         .then(data => {
+            saveData(website, data)
             callback(parseXMLData(data));
         });
     }catch (err) {
