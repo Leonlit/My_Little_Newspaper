@@ -1,6 +1,6 @@
 # My_Little_Newspaper
 
-A simple RSS reader for raeding Feed from [FreeCodeCamp](https://www.freecodecamp.org/), Dev.to, [Hackernoon](https://hackernoon.com/) and [Dzone](https://dzone.com/). Created using HTML, JS, Jquery, CSS as well as Bootstrap 4. User can change the theme of the website between dark and light mode. The website are quite responsive thanks to Bootstrap 4.
+A simple RSS reader for raeding Feed from [FreeCodeCamp](https://www.freecodecamp.org/), [Dev.to](https://dev.to/), [Hackernoon](https://hackernoon.com/) and [Dzone](https://dzone.com/). Created using HTML, JS, Jquery, CSS as well as Bootstrap 4. User can change the theme of the website between dark and light mode. The website are quite responsive thanks to Bootstrap 4.
 
 
 ## screenshot of the website
