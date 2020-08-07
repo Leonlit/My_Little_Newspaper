@@ -111,7 +111,7 @@ let darkMode = true;
 function lightDarkMode () {
     let navbar = $("nav").first();
     let placeholder = $(".navbar-nav .nav-item").first();
-    let source = $(".navbar-nav .nav-item a");
+    let source = $(".navbar-nav a");
     let selectionBtn = $(".dropdown button").first();
     let dropdownMenu = $(".dropdown div");
     let dropDownMenuItems = $(".dropdown div a");
