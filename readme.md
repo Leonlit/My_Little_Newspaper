@@ -10,7 +10,7 @@ A simple RSS reader for raeding Feed from [FreeCodeCamp](https://www.freecodecam
     git clone https://github.com/Leonlit My_Little_Newspaper.git
     ```
  2. Open the project folder and open up a terminal
- 3. If you have lite-server installed globally, you can skip this step. But if you don't, in your terminal execute this command to install lite-server for this project directory only :
+ 3. If you have lite-server installed on your machine, you can skip this step. But if you don't, in your terminal execute this command to install lite-server for this project directory only :
     ```
     npm install
     ```
