@@ -1,0 +1,32 @@
+{
+  "name": "mylittlenewspaper",
+  "version": "1.0.0",
+  "description": "A simple RSS reader to read feed from Freecodecamp, Dev.to, Hackernoon, and Dzone",
+  "main": "",
+  "dependencies": {},
+  "devDependencies": {
+    "lite-server": "^2.5.4"
+  },
+  "scripts": {
+    "start": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leonlit/My_Little_Newspaper.git"
+  },
+  "keywords": [
+    "RSS-Reader",
+    "CSS",
+    "HTML",
+    "JS",
+    "Jquery",
+    "Bootstrap4"
+  ],
+  "author": "leonlit <leonlit123@gmail.com> (https://github.com/Leonlit)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Leonlit/My_Little_Newspaper/issues"
+  },
+  "homepage": "https://github.com/Leonlit/My_Little_Newspaper#readme"
+}

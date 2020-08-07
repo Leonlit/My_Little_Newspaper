@@ -3,6 +3,30 @@
 A simple RSS reader for raeding Feed from [FreeCodeCamp](https://www.freecodecamp.org/), [Dev.to](https://dev.to/), [Hackernoon](https://hackernoon.com/) and [Dzone](https://dzone.com/). Created using HTML, JS, Jquery, CSS as well as Bootstrap 4. User can change the theme of the website between dark and light mode. The website are quite responsive thanks to Bootstrap 4.
 
 
+## Running The App Locally
+
+ 1. Clone the project 
+    ```
+    git clone https://github.com/Leonlit My_Little_Newspaper.git
+    ```
+ 2. Open the project folder and open up a terminal
+ 3. If you have lite-server installed globally, you can skip this step. But if you don't, in your terminal execute this command to install lite-server for this project directory only :
+    ```
+    npm install
+    ```
+    
+    If you want to install lite-server globally, execute this command instead : 
+    ```
+    npm install lite-server -g
+    ```
+
+ 4. Now, type this command to start up the lite-server
+
+    ```
+    npm start
+    ```
+
+
 ## screenshot of the website
 
 ### Dark theme
