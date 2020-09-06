@@ -36,7 +36,6 @@ A simple RSS reader for raeding Feed from [FreeCodeCamp](https://www.freecodecam
 ### Light theme
 
 ![Light theme of the website](https://github.com/Leonlit/My_Little_Newspaper/blob/master/img/homepage-light.png?raw=true)
-​
 
 ## Contact
 If you have any question or suggestion regarding the project, feel free to contact me. If you found any bugs in the program, please contact me if you can. Thanks :D 
