@@ -3,7 +3,7 @@ const URLS = [
     [
         "https://www.freecodecamp.org/news/rss/",
         "https://dev.to/feed",
-        "https://feeds.dzone.com/home",
+        "http://feeds.dzone.com/home",
     ],
     [
         "https://threatpost.com/feed/",

@@ -55,8 +55,7 @@ function getCategories (XML) {
     for (let i = 0;i< ITEMS.length; i++) {
         let cateArr = getTagData(ITEMS[i], "category", 0);
         //Joining the categories together to prevent showing the comma sign
-        cateArr = cateArr.map(item=>`#${item} `).join(" ");
-        CATEGORIES.push(cateArr);
+        CATEGORIES.push(cateArr)
     }
     return CATEGORIES;
 }
@@ -90,11 +89,14 @@ const card_light = {
 //function for constructing post container
 //FreeCodeCamp post construction
 function constructFCCData (xmlData) {
+    const CATEGORIES = getCategories(xmlData);
+    console.log(CATEGORIES[0][0]);
     const TITLES = getTagData(xmlData, "title", 2)
     const DESCRIPTIONS = getTagData(xmlData, "description", 1);
     const DATES = getTagData(xmlData, "pubDate", 0);
     const LINKS = getTagData(xmlData, "link", 2);
     const IMAGES = getImages(xmlData, "media:content");
+    const AUTHORS = getAuthors(xmlData);
 
     for (let i = 0; i < TITLES.length;i++) {
         let card = document.createElement("div");
@@ -104,6 +106,7 @@ function constructFCCData (xmlData) {
         let link = document.createElement("a");
         let date = document.createElement("div");
         let body = document.createElement("div");
+        let author = document.createElement("p");
 
         $(card).addClass("card m-3");
         $(card).css(darkMode ? card_dark : card_light);
@@ -115,12 +118,20 @@ function constructFCCData (xmlData) {
         $(title).append(link);
         $(header).append(title);
 
-        $(date).addClass("card-text text-right");
+        $(author).addClass("card-text text-left inline mt-2");
+        $(author).text(AUTHORS[i]);
+        $(date).addClass("card-text text-right inline");
         $(date).text(formatDates(DATES[i]));
+        $(header).append(author);
         $(header).append(date);
 
         $(body).addClass("card-body text-justify");
-        $(body).html(DESCRIPTIONS[i]);
+        let categoriesTag = ""
+        for (let tag = 0 ; tag < CATEGORIES[i].length ;tag++) {
+            console.log("test");
+            categoriesTag += `<button type="button" class="btn btn-primary">${CATEGORIES[i][tag]}</button>`;
+        } 
+        $(body).html(`${categoriesTag}<div class="container"></div>${formatDescriptionText(DESCRIPTIONS[i])}`);
         
         $(image).addClass("card-img-top");
         $(image).attr("src", $(IMAGES[i]).attr("url"));
@@ -134,11 +145,12 @@ function constructFCCData (xmlData) {
 
 //Dev.to post construction
 function constructDevToData (xmlData) {
+    const CATEGORIES = getCategories(xmlData);
     const TITLES = getTagData(xmlData, "title", 1)
     const DESCRIPTIONS = getTagData(xmlData, "description", 1);
     const DATES = getTagData(xmlData, "pubDate", 0);
     const LINKS = getTagData(xmlData, "link", 1);
-    const AUTHORS = getTagData(xmlData, "author", 1);
+    const AUTHORS = getAuthors(xmlData);
 
     for (let i = 0; i < TITLES.length;i++) {
         let card = document.createElement("div");
@@ -167,7 +179,12 @@ function constructDevToData (xmlData) {
         $(header).append(date);
 
         $(body).addClass("card-body text-justify");
-        $(body).html(formatDescriptionText(DESCRIPTIONS[i]));
+        let categoriesTag = ""
+        for (let tag = 0 ; tag < CATEGORIES[i].length ;tag++) {
+            console.log("test");
+            categoriesTag += `<button type="button" class="btn btn-primary">${CATEGORIES[i][tag]}</button>`;
+        } 
+        $(body).html(`${categoriesTag}<div class="container"></div>${formatDescriptionText(DESCRIPTIONS[i])}`);
 
         $(card).append(header);
         $(card).append(body);
@@ -177,23 +194,22 @@ function constructDevToData (xmlData) {
 
 //Dzone post construction
 function constructDZoneData (xmlData) {
-    const CATEGORIES = getCategories(xmlData);
-    const AUTHORS = getAuthors(xmlData)
-    const TITLES = getTagData(xmlData, "title", 1)
-    const DATES = getTagData(xmlData, "pubDate", 0);
+    const TITLES = getTagData(xmlData, "title", 2)
     const DESCRIPTIONS = getTagData(xmlData, "description", 1);
-    const LINKS = getTagData(xmlData, "link", 1);
+    const DATES = getTagData(xmlData, "pubDate", 0);
+    const LINKS = getTagData(xmlData, "link", 2);
     const IMAGES = getImages(xmlData, "media:thumbnail");
-    
+    const AUTHORS = getAuthors(xmlData);
+
     for (let i = 0; i < TITLES.length;i++) {
         let card = document.createElement("div");
+        let image = document.createElement("img");
         let header = document.createElement("div");
         let title = document.createElement("h4");
         let link = document.createElement("a");
-        let author = document.createElement("p");
-        let date = document.createElement("p");
-        let image = document.createElement("img");
+        let date = document.createElement("div");
         let body = document.createElement("div");
+        let author = document.createElement("p");
 
         $(card).addClass("card m-3");
         $(card).css(darkMode ? card_dark : card_light);
@@ -207,32 +223,34 @@ function constructDZoneData (xmlData) {
 
         $(author).addClass("card-text text-left inline mt-2");
         $(author).text(AUTHORS[i]);
-        $(date).addClass("card-text text-right inline");
+        $(date).addClass("card-text text-right");
         $(date).text(formatDates(DATES[i]));
         $(header).append(author);
         $(header).append(date);
 
         $(body).addClass("card-body text-justify");
-        $(body).html(`${CATEGORIES[i]}<div class="container"></div>${formatDescriptionText(DESCRIPTIONS[i])}`);
-
+        $(body).html(`<div class="container"></div>${formatDescriptionText(DESCRIPTIONS[i])}`);
+        
         $(image).addClass("card-img-top");
-        $(image).attr("src", $(IMAGES[i]).attr("url"));
+        $(image).attr("src", $(IMAGES[(i + 1) * 4 ]).attr("url"));
 
         $(card).append(image);
         $(card).append(header);
         $(card).append(body);
         $("#post-container").append(card);
-    } 
+    }
 }
 
 
 //ThreatPost post construction
 function constructThreatPostData (xmlData) {
+    const CATEGORIES = getCategories(xmlData);
     const TITLES = getTagData(xmlData, "title", 2)
     const DESCRIPTIONS = getTagData(xmlData, "description", 1);
     const DATES = getTagData(xmlData, "pubDate", 0);
     const LINKS = getTagData(xmlData, "link", 2);
     const IMAGES = getImages(xmlData, "media:content");
+    const AUTHORS = getAuthors(xmlData);
 
     for (let i = 0; i < TITLES.length;i++) {
         let card = document.createElement("div");
@@ -242,6 +260,7 @@ function constructThreatPostData (xmlData) {
         let link = document.createElement("a");
         let date = document.createElement("div");
         let body = document.createElement("div");
+        let author = document.createElement("p");
 
         $(card).addClass("card m-3");
         $(card).css(darkMode ? card_dark : card_light);
@@ -253,12 +272,20 @@ function constructThreatPostData (xmlData) {
         $(title).append(link);
         $(header).append(title);
 
+        $(author).addClass("card-text text-left inline mt-2");
+        $(author).text(AUTHORS[i]);
         $(date).addClass("card-text text-right");
         $(date).text(formatDates(DATES[i]));
+        $(header).append(author);
         $(header).append(date);
 
         $(body).addClass("card-body text-justify");
-        $(body).html(DESCRIPTIONS[i]);
+        let categoriesTag = ""
+        for (let tag = 0 ; tag < CATEGORIES[i].length ;tag++) {
+            console.log("test");
+            categoriesTag += `<button type="button" class="btn btn-primary">${CATEGORIES[i][tag]}</button>`;
+        } 
+        $(body).html(`${categoriesTag}<div class="container"></div>${DESCRIPTIONS[i]}`);
         
         $(image).addClass("card-img-top");
         $(image).attr("src", $(IMAGES[(i + 1) * 4 ]).attr("url"));
@@ -267,5 +294,5 @@ function constructThreatPostData (xmlData) {
         $(card).append(header);
         $(card).append(body);
         $("#post-container").append(card);
-    }  
+    }
 }
