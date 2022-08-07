@@ -175,49 +175,6 @@ function constructDevToData (xmlData) {
     }
 }
 
-//Hackernoon post construction
-function constructHackernoonData (xmlData) {
-    const CATEGORIES = getCategories(xmlData);
-    const AUTHORS = getAuthors(xmlData)
-    const TITLES = getTagData(xmlData, "title", 1)
-    const DATES = getTagData(xmlData, "pubDate", 1);
-    const LINKS = getTagData(xmlData, "link", 1);
-    
-    for (let i = 0; i < TITLES.length;i++) {
-        let card = document.createElement("div");
-        let header = document.createElement("div");
-        let title = document.createElement("h4");
-        let link = document.createElement("a");
-        let author = document.createElement("p");
-        let date = document.createElement("p");
-        let body = document.createElement("div");
-
-        $(card).addClass("card m-3");
-        $(card).css(darkMode ? card_dark : card_light);
-    
-        $(header).addClass("card-header");
-        $(link).text(TITLES[i]);
-        $(link).attr("href", (LINKS[i]));
-        $(link).attr("target","_blank");
-        $(title).append(link);
-        $(header).append(title);
-
-        $(author).addClass("card-text text-left inline mt-2");
-        $(author).text(AUTHORS[i]);
-        $(date).addClass("card-text text-right inline");
-        $(date).text(formatDates(DATES[i]));
-        $(header).append(author);
-        $(header).append(date);
-
-        $(body).addClass("card-body text-justify");
-        $(body).text(CATEGORIES[i]);
-
-        $(card).append(header);
-        $(card).append(body);
-        $("#post-container").append(card);
-    } 
-}
-
 //Dzone post construction
 function constructDZoneData (xmlData) {
     const CATEGORIES = getCategories(xmlData);
@@ -266,4 +223,49 @@ function constructDZoneData (xmlData) {
         $(card).append(body);
         $("#post-container").append(card);
     } 
+}
+
+
+//ThreatPost post construction
+function constructThreatPostData (xmlData) {
+    const TITLES = getTagData(xmlData, "title", 2)
+    const DESCRIPTIONS = getTagData(xmlData, "description", 1);
+    const DATES = getTagData(xmlData, "pubDate", 0);
+    const LINKS = getTagData(xmlData, "link", 2);
+    const IMAGES = getImages(xmlData, "media:content");
+
+    for (let i = 0; i < TITLES.length;i++) {
+        let card = document.createElement("div");
+        let image = document.createElement("img");
+        let header = document.createElement("div");
+        let title = document.createElement("h4");
+        let link = document.createElement("a");
+        let date = document.createElement("div");
+        let body = document.createElement("div");
+
+        $(card).addClass("card m-3");
+        $(card).css(darkMode ? card_dark : card_light);
+    
+        $(header).addClass("card-header");
+        $(link).text(TITLES[i]);
+        $(link).attr("href", (LINKS[i]));
+        $(link).attr("target","_blank");
+        $(title).append(link);
+        $(header).append(title);
+
+        $(date).addClass("card-text text-right");
+        $(date).text(formatDates(DATES[i]));
+        $(header).append(date);
+
+        $(body).addClass("card-body text-justify");
+        $(body).html(DESCRIPTIONS[i]);
+        
+        $(image).addClass("card-img-top");
+        $(image).attr("src", $(IMAGES[(i + 1) * 4 ]).attr("url"));
+
+        $(card).append(image);
+        $(card).append(header);
+        $(card).append(body);
+        $("#post-container").append(card);
+    }  
 }

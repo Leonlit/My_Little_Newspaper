@@ -1,6 +1,70 @@
+//Array that holds the link for the feeds
+const URLS = [
+    [
+        "https://www.freecodecamp.org/news/rss/",
+        "https://dev.to/feed",
+        "https://feeds.dzone.com/home",
+    ],
+    [
+        "https://threatpost.com/feed/",
+    ],
+];
+
+const section = ["Programming", "Cyber Security"]
+
+const siteLabels = [
+    //Programming
+    [
+        "FreeCodeCamp",
+        "Dev.to",
+        "Dzone",
+    ],
+    [
+        //Cyber Security
+        "Threatpost",
+    ],
+]
+
+//Array used to store the callback function that we'll be using to construct the post
+const CALLBACKS = [
+    [
+        constructFCCData, 
+        constructDevToData,
+        constructDZoneData,
+    ],
+    [
+        constructThreatPostData,
+    ],
+];
+
+setupPlatformSelection();
+
+function setupPlatformSelection () {
+    const container = document.getElementById("platformSelection");
+    for (let item = 0; item < section.length; item++) {
+        let ele = document.createElement("a");
+        ele.innerHTML = section[item]
+        ele.className = "dropdown-item disabled"
+        container.appendChild(ele)
+        for (let site = 0; site < siteLabels[item].length ; site++ ) {
+            let ele = document.createElement("a");
+            ele.innerHTML = siteLabels[item][site];
+            ele.className = "dropdown-item";
+            ele.id = `${item}_${site}`;
+            container.appendChild(ele)
+        }
+        let divider = document.createElement("div");
+        divider.className = "dropdown-divider";
+        if (item != section.length - 1)
+            container.appendChild(divider);
+    }
+}
+
+
 //Handling option choosed
 $(".dropdown-menu a").click ((event) => {
     //When an option is choosed, the system will change text for the button
+    let id = event.target.id;
     let text = $(event.target).text();
     $(".dropdown button").text(text);
     //change the element that's currently active in the dropdown item
@@ -8,68 +72,39 @@ $(".dropdown-menu a").click ((event) => {
     $("#current-website").text(`${text} RSS Feed`);
     $(event.target).addClass("active");
     //Then pass clicked items website name to showRSSFeed
-    let state = showRSSFeed(text);
+    let state = showRSSFeed(id, text);
     //incase error occurs at cors-anywhere 
     if (state == false) {
         console.log("Something wrong while constructing request url");
     }
 });
 
-//Array that holds the link for the feeds
-const URLS = [
-                "https://www.freecodecamp.org/news/rss/",
-                "https://dev.to/feed",
-                "https://hackernoon.com/feed",
-                "http://feeds.dzone.com/home"
-            ];
-
-//Array used to store the callback function that we'll be using to construct the post
-const CALLBACKS = [constructFCCData, constructDevToData,
-                    constructHackernoonData, constructDZoneData
-                ];
-
-function showRSSFeed (website) {
-    let index;
+function showRSSFeed (id, website) {
     
     //whenever the option changed, clear the container content
     $("#post-container").html("");
 
-    //dedtermine which website are clicked, then provide index to be used to get the URl and callback
-    //that we will be using for the website choosed
-    switch (website) {
-        case "FreeCodeCamp":
-            index = 0;
-            break;
-        case "Dev.to":
-            index = 1;
-            break;
-        case "Hackernoon":
-            index = 2;
-            break;
-        case "Dzone":
-            index = 3;
-            break;
-        default:
-            console.log("Error occured, unknown website provided");
-            return false;
-    }
     //check if there's saved data for the website feed
     let checkStorage = gotUsableData (website);
+    let splits = id.split("_")
+    let section = splits[0];
+    let site = splits[1]
+    console.log(section, site);
     if (!checkStorage) {
         //if does not have saved data, fetch data using the url and callback with the index as the
         //element position
-        fetchData(CALLBACKS[index], URLS[index], website);
+        fetchData(CALLBACKS[section][site], URLS[section][site], website);
     }else {
         //when there's saved data in the storage, use the checkStorage variable as the argument
         //because we return the text of the xml if we've saved data for the feed
-        CALLBACKS[index](parseXMLData(checkStorage));
+        CALLBACKS[section][site](parseXMLData(checkStorage));
     }
 }
 
 //fetching the data
 async function fetchData (callback, url, website) {
     try {
-        await fetch(`https://cors-anywhere.herokuapp.com/${url}`)
+        await fetch(url)
         .then(response=>response.text())
         .then(data => {
             //since we only fetch data when we dont have the data saved or the 
