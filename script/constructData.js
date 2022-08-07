@@ -128,7 +128,7 @@ function constructFCCData (xmlData) {
         $(body).addClass("card-body text-justify");
         let categoriesTag = ""
         for (let tag = 0 ; tag < CATEGORIES[i].length ;tag++) {
-            console.log("test");
+            if (CATEGORIES[i][tag] == "") continue
             categoriesTag += `<button type="button" class="btn btn-primary">${CATEGORIES[i][tag]}</button>`;
         } 
         $(body).html(`${categoriesTag}<div class="container"></div>${formatDescriptionText(DESCRIPTIONS[i])}`);
@@ -181,7 +181,7 @@ function constructDevToData (xmlData) {
         $(body).addClass("card-body text-justify");
         let categoriesTag = ""
         for (let tag = 0 ; tag < CATEGORIES[i].length ;tag++) {
-            console.log("test");
+            if (CATEGORIES[i][tag] == "") continue
             categoriesTag += `<button type="button" class="btn btn-primary">${CATEGORIES[i][tag]}</button>`;
         } 
         $(body).html(`${categoriesTag}<div class="container"></div>${formatDescriptionText(DESCRIPTIONS[i])}`);
@@ -282,7 +282,7 @@ function constructThreatPostData (xmlData) {
         $(body).addClass("card-body text-justify");
         let categoriesTag = ""
         for (let tag = 0 ; tag < CATEGORIES[i].length ;tag++) {
-            console.log("test");
+            if (CATEGORIES[i][tag] == "") continue
             categoriesTag += `<button type="button" class="btn btn-primary">${CATEGORIES[i][tag]}</button>`;
         } 
         $(body).html(`${categoriesTag}<div class="container"></div>${DESCRIPTIONS[i]}`);
